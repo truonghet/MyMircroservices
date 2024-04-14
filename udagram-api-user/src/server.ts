@@ -1,13 +1,14 @@
 import cors from 'cors';
 import express from 'express';
 import {sequelize} from './sequelize';
-
 import {IndexRouter} from './controllers/v0/index.router';
-
 import bodyParser from 'body-parser';
 import {config} from './config/config';
 import {V0_USER_MODELS} from './controllers/v0/model.index';
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 (async () => {
   await sequelize.addModels(V0_USER_MODELS);
@@ -16,7 +17,7 @@ import {V0_USER_MODELS} from './controllers/v0/model.index';
   await sequelize.sync();
 
   const app = express();
-  const port = process.env.PORT || 8080;
+  const port = process.env.PORT || 8100;
 
   app.use(bodyParser.json());
 
@@ -35,6 +36,7 @@ import {V0_USER_MODELS} from './controllers/v0/model.index';
   }));
 
   app.use('/api/v0/', IndexRouter);
+  console.log('IndexRouter:', IndexRouter);
 
   // Root URI call
   app.get( '/', async ( req, res ) => {
