@@ -47,6 +47,6 @@ if (process.env.NODE_ENV !== 'production') {
   // Start the Server
   app.listen( port, () => {
     console.log( `server running ${config.url}` );
-    console.log( `press CTRL+C to stop server` );
+    console.log( `press CTRL + C to stop server` );
   } );
 })();
