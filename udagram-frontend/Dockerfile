@@ -1,4 +1,4 @@
-FROM beevelop/ionic AS ionic
+FROM beevelop/ionic:v2021.06.1 AS ionic
 
 WORKDIR /usr/src/app
 
