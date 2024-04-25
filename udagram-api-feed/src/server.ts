@@ -1,24 +1,22 @@
 import cors from 'cors';
 import express from 'express';
 import {sequelize} from './sequelize';
+
 import {IndexRouter} from './controllers/v0/index.router';
+
 import bodyParser from 'body-parser';
 import {config} from './config/config';
 import {V0_FEED_MODELS} from './controllers/v0/model.index';
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
 
 (async () => {
   await sequelize.addModels(V0_FEED_MODELS);
 
   console.debug("Initialize database connection...");
-  console.debug("POSTGRES_HOST:", process.env.POSTGRES_HOST);
   await sequelize.sync();
 
   const app = express();
-  const port = process.env.PORT || 8100;
+  const port = process.env.PORT || 8080;
 
   app.use(bodyParser.json());
 
@@ -47,6 +45,6 @@ if (process.env.NODE_ENV !== 'production') {
   // Start the Server
   app.listen( port, () => {
     console.log( `server running ${config.url}` );
-    console.log( `press CTRL + C to stop server` );
+    console.log( `press CTRL+C to stop server` );
   } );
 })();
